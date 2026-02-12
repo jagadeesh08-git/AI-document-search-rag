@@ -1,0 +1,10 @@
+streamlit
+langchain
+langchain-community
+langchain-text-splitters
+chromadb
+transformers
+torch
+pypdf
+pandas
+numpy
