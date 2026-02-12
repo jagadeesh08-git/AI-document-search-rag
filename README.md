@@ -1,5 +1,3 @@
-Sure — here’s a clean README.md you can use for your AI Document Search using RAG project. You can copy-paste this directly into a README.md file in your repo.
-
 AI Document Search using RAG 📄🤖
 
 An interactive Retrieval-Augmented Generation (RAG) application that allows users to upload documents and ask questions.
