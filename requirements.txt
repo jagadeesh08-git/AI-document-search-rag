@@ -8,3 +8,5 @@ torch
 pypdf
 pandas
 numpy
+docx2txt
+sentence-transformers
