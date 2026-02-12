@@ -1,95 +1,157 @@
-AI Document Search using RAG 📄🤖
+# 📄 AI Document Search using RAG
 
-An interactive Retrieval-Augmented Generation (RAG) application that allows users to upload documents and ask questions.
-The system retrieves relevant content from uploaded files and generates answers using a language model.
+An AI-powered **Document Question Answering system** built using **Retrieval-Augmented Generation (RAG)**.
+Upload documents and ask questions — answers are generated **strictly from the uploaded content**.
 
-Built with Streamlit + LangChain + ChromaDB + Transformers.
+This project demonstrates practical use of **LLMs + vector databases + document retrieval** in a simple web application.
 
-Features
+---
 
-Upload multiple documents (PDF, TXT, CSV)
+## 🚀 Demo
 
-Document chunking and indexing
+Deployed with Streamlit Cloud
+👉 Add your app link here
 
-Vector database retrieval
+Example:
 
-AI-generated answers from document context
+```
+[https://your-app-name.streamlit.app](https://ai-document-search-rag-85nzddooadkfysdpwyzc6a.streamlit.app/)
+```
 
-Suggested questions per document
+---
+## 📸 App Preview
 
-Chat history tracking
+<img width="1917" height="870" alt="image" src="https://github.com/user-attachments/assets/d841b7fa-8214-486d-8387-f8e5942b076d" />
 
-Download chat history
 
-Clean UI with sidebar controls
 
-Tech Stack
+## ✨ Features
 
-Streamlit
+* Upload **PDF, TXT, and CSV documents**
+* Ask questions about uploaded files
+* Retrieval-Augmented Generation (RAG) pipeline
+* Automatic **document indexing**
+* **Suggested questions generator**
+* Chat history tracking
+* Download chat history
+* Clean Streamlit UI
+* Local LLM inference using FLAN-T5
 
-LangChain
+---
 
-ChromaDB
+## 🧠 How It Works
 
-HuggingFace Transformers
+The application follows the RAG pipeline:
 
-PyPDF
+1. Upload documents
+2. Extract text using document loaders
+3. Split text into chunks
+4. Convert chunks into embeddings
+5. Store embeddings in Chroma vector database
+6. Retrieve relevant chunks for the question
+7. Generate answer using FLAN-T5 model
 
-Pandas
+---
 
-NumPy
+## 🏗 Architecture
 
-Torch
+```
+User Query
+    ↓
+Retriever (Chroma Vector DB)
+    ↓
+Relevant Document Chunks
+    ↓
+FLAN-T5 Language Model
+    ↓
+Generated Answer
+```
 
-Project Structure
-AI-DOCU-APP/
-│
-├── app.py
-├── requirements.txt
-└── .streamlit/
-    └── config.toml
+---
 
-Installation
+## 🛠 Tech Stack
+
+**Frontend**
+
+* Streamlit
+
+**AI / NLP**
+
+* Transformers (FLAN-T5)
+* LangChain
+
+**Vector Database**
+
+* ChromaDB
+
+**Document Processing**
+
+* PyPDF
+* TextLoader
+* CSVLoader
+
+**Language**
+
+* Python
+
+---
+
+## 📦 Installation
 
 Clone the repository:
 
-git clone https://github.com/YOUR_USERNAME/AI-document-search-rag.git
-cd AI-document-search-rag
-
+```bash
+git clone https://github.com/your-username/ai-document-search-rag.git
+cd ai-document-search-rag
+```
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
-
+```
 
 Run the app:
 
+```bash
 streamlit run app.py
+```
 
-How it Works
+---
 
-User uploads documents
+## 📂 Project Structure
 
-Documents are split into chunks
+```
+ai-document-search-rag/
+│
+├── app.py
+├── requirements.txt
+├── config.toml
+└── README.md
+```
 
-Chunks are stored in a vector database
+---
 
-User asks a question
+## 🎯 Learning Objectives
 
-Relevant chunks are retrieved
+This project demonstrates:
 
-LLM generates answer from retrieved context
+* Retrieval-Augmented Generation (RAG)
+* Document embeddings
+* Vector similarity search
+* Prompt-based generation
+* Streamlit app deployment
+* LLM integration with LangChain
 
-This is the Retrieval-Augmented Generation (RAG) pipeline.
+---
 
-Example Use Cases
+## 🔮 Future Improvements
 
-Resume/document search assistant
+* Replace FakeEmbeddings with real embeddings
+* Add OpenAI / HuggingFace embedding models
+* Add multi-document citation references
+* Add conversation memory
+* Add authentication
+* Improve UI/UX
 
-Research document Q&A
-
-Study material search
-
-Knowledge-base assistant
-
-Report analysis tool
+---
