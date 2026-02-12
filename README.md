@@ -101,7 +101,8 @@ Generated Answer
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/ai-document-search-rag.git
+git clone [https://github.com/your-username/ai-document-search-rag.git](https://github.com/jagadeesh08-git/AI-document-search-rag.git
+)
 cd ai-document-search-rag
 ```
 
