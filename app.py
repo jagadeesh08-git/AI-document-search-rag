@@ -1,20 +1,25 @@
-
-
 import streamlit as st
 import tempfile
 import os
 import re
+import random
 from collections import Counter
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
+from langchain_community.document_loaders import (
+    PyPDFLoader,
+    TextLoader,
+    CSVLoader,
+    Docx2txtLoader
+)
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import FakeEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
 # ================= PAGE SETUP =================
 st.set_page_config(page_title="AI Document Search using RAG", layout="centered")
 
-# ================= THEME + HEADER =================
+# ================= HEADER =================
 st.markdown("""
 <style>
 
@@ -71,7 +76,6 @@ Upload one or more documents and ask questions.
 Answers are generated **strictly from uploaded documents**.
 """)
 
-
 # ================= SESSION STATE =================
 defaults = {
     "chat_history": [],
@@ -83,18 +87,14 @@ for k, v in defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
-
-# ================= FILE SAVE =================
+# ================= SAVE FILE =================
 def save_file(file):
     data = file.getvalue()
-    if not data:
-        return None
     suffix = "." + file.name.split(".")[-1]
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
     tmp.write(data)
     tmp.close()
     return tmp.name
-
 
 # ================= LOAD DOCUMENTS =================
 def load_docs(files):
@@ -102,29 +102,29 @@ def load_docs(files):
 
     for file in files:
         path = save_file(file)
-        if not path:
-            continue
-
         ext = file.name.split(".")[-1].lower()
-        loader = {
+
+        loader_map = {
             "pdf": PyPDFLoader,
             "txt": TextLoader,
-            "csv": CSVLoader
-        }.get(ext)
+            "csv": CSVLoader,
+            "docx": Docx2txtLoader
+        }
 
-        if loader:
+        loader_class = loader_map.get(ext)
+
+        if loader_class:
             try:
-                docs = loader(path).load()
+                docs = loader_class(path).load()
                 for d in docs:
                     d.metadata["source"] = file.name
                 documents.extend(docs)
-            except Exception:
-                pass
+            except Exception as e:
+                st.error(f"Error loading {file.name}: {e}")
 
         os.remove(path)
 
     return documents
-
 
 # ================= VECTOR DB =================
 @st.cache_resource(show_spinner=False)
@@ -133,15 +133,18 @@ def build_vector_db(files):
     if not docs:
         raise ValueError("No readable text found in uploaded documents.")
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=40)
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=400,
+        chunk_overlap=40
+    )
     chunks = splitter.split_documents(docs)
-    if not chunks:
-        raise ValueError("No text chunks created from documents.")
 
-    embeddings = FakeEmbeddings(size=384)
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
+
     db = Chroma.from_documents(chunks, embeddings)
     return db, chunks
-
 
 # ================= LLM =================
 @st.cache_resource(show_spinner=False)
@@ -150,27 +153,7 @@ def load_llm():
     model = AutoModelForSeq2SeqLM.from_pretrained("google/flan-t5-base")
     return tokenizer, model
 
-
-# ================= QUESTION TEMPLATES (11 TYPES) =================
-QUESTION_TEMPLATES = [
-    "Explain the concept of {} in detail.",
-    "How does {} work in practical applications?",
-    "What are the main steps involved in {}?",
-    "Why is {} important in real-world systems?",
-    "Discuss the advantages and limitations of {}.",
-    "How is {} implemented and evaluated?",
-    "Compare {} with related approaches or methods.",
-    "What challenges are associated with {}?",
-    "In which scenarios is {} most effective?",
-    "How is the performance of {} measured?",
-    "What are the major application areas of {}?"
-]
-
-
 # ================= SUGGESTIONS =================
-# ================= SUGGESTIONS =================
-import random
-
 QUESTION_PATTERNS = [
     "Explain {} in detail.",
     "How is {} used in real-world applications?",
@@ -218,30 +201,19 @@ def generate_suggestions(chunks, max_per_doc=5):
 
     return suggestions
 
-
-
-# ================= CLEAR CHAT =================
-if st.button("🧹 Clear Chat"):
-    st.session_state.chat_history.clear()
-    st.session_state.query = ""
-    st.session_state.suggestions.clear()
-    st.cache_resource.clear()
-    st.rerun()
-
-
-# ================= FILE UPLOAD =================
+# ================= SIDEBAR =================
 st.sidebar.title("AI Document Search")
 
 uploaded_files = st.sidebar.file_uploader(
-    "Upload document(s) 🗂️ ",
-    type=["pdf", "txt", "csv"],
+    "Upload document(s)",
+    type=["pdf", "txt", "csv", "docx"],
     accept_multiple_files=True
 )
 
 st.sidebar.markdown("---")
 st.sidebar.caption("RAG Document Assistant")
 
-
+# ================= FILE CHANGE RESET =================
 current_files = tuple(f.name for f in uploaded_files) if uploaded_files else None
 if current_files != st.session_state.last_files:
     st.session_state.chat_history.clear()
@@ -250,30 +222,21 @@ if current_files != st.session_state.last_files:
     st.cache_resource.clear()
     st.session_state.last_files = current_files
 
-
 # ================= PROCESS FILES =================
 if uploaded_files:
     with st.spinner("Indexing documents..."):
-        try:
-            vector_db, chunks = build_vector_db(uploaded_files)
-            retriever = vector_db.as_retriever(search_kwargs={"k": 4})
-        except Exception as e:
-            st.error(str(e))
-            st.stop()
+        vector_db, chunks = build_vector_db(uploaded_files)
+        retriever = vector_db.as_retriever(search_kwargs={"k": 4})
 
     if not st.session_state.suggestions:
         st.session_state.suggestions = generate_suggestions(chunks)
 
-
-# ================= QUESTION INPUT =================
-# ================= QUESTION INPUT =================
+# ================= INPUT =================
 st.session_state.query = st.text_input(
     "Ask a question from the document:",
     value=st.session_state.query,
-    placeholder="Type a complete question",
-    autocomplete="off"
+    placeholder="Type a complete question"
 )
-
 
 col1, col2 = st.columns(2)
 with col1:
@@ -287,34 +250,25 @@ if clear_q:
 
 query = st.session_state.query.strip()
 
-
-# ================= SHOW SUGGESTIONS =================
-# ================= SHOW SUGGESTIONS =================
+# ================= SUGGESTIONS =================
 if uploaded_files and st.session_state.suggestions and query == "":
     st.markdown("💡 Suggested Questions")
-
     for doc, qs in st.session_state.suggestions.items():
         st.markdown(f"### 📄 {doc}")
-
         for q in qs:
             if st.button(q, key=doc + q):
                 st.session_state.query = q
                 st.rerun()
 
-
-
 # ================= ANSWER =================
 def answer_question(docs, question):
     context = " ".join(d.page_content for d in docs)
+
     if len(context.strip()) < 30:
         return "Information not found in the uploaded documents."
 
     prompt = f"""
 Answer using ONLY the context below.
-
-FORMAT:
-- One short paragraph
-- Exactly 4 bullet points
 
 Context:
 {context}
@@ -331,20 +285,17 @@ Answer:
 
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-
-# ================= EXECUTE QUERY =================
+# ================= EXECUTE =================
 if uploaded_files and ask_clicked and len(query.split()) >= 3:
     docs = retriever.invoke(query)
+
     if docs:
         answer = answer_question(docs, query)
         st.markdown("### 🧠 Answer")
-        st.markdown('<div class="answer-box">', unsafe_allow_html=True)
         st.write(answer)
-        st.markdown('</div>', unsafe_allow_html=True)
 
         if "not found" not in answer.lower():
             st.session_state.chat_history.append((query, answer))
-
 
 # ================= CHAT HISTORY =================
 if st.session_state.chat_history:
@@ -352,13 +303,10 @@ if st.session_state.chat_history:
     for i, (q, a) in enumerate(st.session_state.chat_history, 1):
         st.markdown(f"**Q{i}: {q}**")
         st.write(a)
-# ================= DOWNLOAD CHAT HISTORY =================
-if st.session_state.chat_history:
-    chat_text = ""
 
+    chat_text = ""
     for i, (q, a) in enumerate(st.session_state.chat_history, 1):
-        chat_text += f"Q{i}: {q}\n"
-        chat_text += f"A{i}: {a}\n\n"
+        chat_text += f"Q{i}: {q}\nA{i}: {a}\n\n"
 
     st.download_button(
         label="⬇️ Download Chat History",
