@@ -38,16 +38,18 @@ Retrieval-Augmented Document Assistant
 </p>
 </div>
 """, unsafe_allow_html=True)
+# ================= THEME + HEADER ================= st.markdown
+( """ <style> .stApp { background-color: #9CA3AF; } 
+header[data-testid="stHeader"] 
+{ background-color: #9CA3AF; } 
+section[data-testid="stSidebar"] 
+{ background-color: #9CA3AF; } 
+div[data-testid="stAppViewContainer"] 
+{ background-color: #E5E7EB; } 
+div.block-container 
+{ background-color: #E5E7EB; border-radius: 12px; padding: 2rem; } .stTextInput input { background-color: #E5E7EB !important; border: 1px solid #6B7280 !important; border-radius: 8px; } .stButton button { background-color: #4F46E5; color: white; border-radius: 8px; } .stButton button:hover { background-color: #4338CA; } 
+</style> """, unsafe_allow_html=True, )
 
-
-st.markdown(
-    """
-<div style="background-color:#4F46E5; padding:18px; border-radius:10px; margin-bottom:20px;">
-<h1 style="color:white; margin:0;">📄 AI Document Search using RAG</h1>
-</div>
-""",
-    unsafe_allow_html=True,
-)
 
 st.markdown(
     "Upload one or more documents and ask questions. "
@@ -339,4 +341,5 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
