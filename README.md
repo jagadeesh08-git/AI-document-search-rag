@@ -1,61 +1,102 @@
-# 📄 AI Document Search using RAG
+📄 AI Document Search using RAG
 
-An AI-powered **Document Question Answering system** built using **Retrieval-Augmented Generation (RAG)**.
-Upload documents and ask questions — answers are generated **strictly from the uploaded content**.
+An AI-powered Document Question Answering system built using Retrieval-Augmented Generation (RAG).
+Upload documents and ask questions — answers are generated strictly from uploaded content.
 
-This project demonstrates practical use of **LLMs + vector databases + document retrieval** in a simple web application.
+This project demonstrates the practical use of:
 
----
+Large Language Models (LLMs)
 
-## 🚀 Demo
+Vector databases
 
-Deployed with Streamlit Cloud
-👉 Add your app link here
+Document retrieval pipelines
 
-Example:
+Streamlit web apps
 
-```
-[https://your-app-name.streamlit.app](https://ai-document-search-rag-85nzddooadkfysdpwyzc6a.streamlit.app/)
-```
+🚀 Demo
 
----
-## 📸 App Preview
+Deployed on Streamlit Cloud:
+https://ai-document-search-rag-85nzddooadkfysdpwyzc6a.streamlit.app/
 
-<img width="1917" height="870" alt="image" src="https://github.com/user-attachments/assets/d841b7fa-8214-486d-8387-f8e5942b076d" />
+📸 App Preview
+
+Add a screenshot here later:
+
+<img width="1913" height="875" alt="image" src="https://github.com/user-attachments/assets/f90b7d31-78e0-4b6d-bab6-6efe0e34003c" />
 
 
+✨ Features
+📄 Multiple Document Upload
 
-## ✨ Features
+Upload PDF, TXT, and CSV files simultaneously.
+All documents are automatically indexed for search.
 
-* Upload **PDF, TXT, and CSV documents**
-* Ask questions about uploaded files
-* Retrieval-Augmented Generation (RAG) pipeline
-* Automatic **document indexing**
-* **Suggested questions generator**
-* Chat history tracking
-* Download chat history
-* Clean Streamlit UI
-* Local LLM inference using FLAN-T5
+💡 Auto Question Suggestions (Per Document)
 
----
+The system generates smart question suggestions for each uploaded document by extracting keywords from document content.
 
-## 🧠 How It Works
+Helps users:
 
-The application follows the RAG pipeline:
+Explore documents quickly
 
-1. Upload documents
-2. Extract text using document loaders
-3. Split text into chunks
-4. Convert chunks into embeddings
-5. Store embeddings in Chroma vector database
-6. Retrieve relevant chunks for the question
-7. Generate answer using FLAN-T5 model
+Understand main topics
 
----
+Ask meaningful questions
 
-## 🏗 Architecture
+🔎 Document Question Answering
 
-```
+Users can ask questions about uploaded files.
+Answers are generated only from retrieved document chunks.
+
+💬 Chat History Tracking
+
+The app stores:
+
+Previous questions
+
+Generated answers
+
+This allows users to review earlier interactions.
+
+⬇️ Download Chat History
+
+Users can download the entire session as a text file for later reference.
+
+📚 Sidebar Document Manager
+
+Sidebar includes:
+
+File upload interface
+
+Document indexing
+
+App controls
+
+🧠 Local LLM Inference
+
+The system runs FLAN-T5 locally using HuggingFace Transformers.
+
+No external API required.
+
+🧠 How It Works
+
+The application follows a Retrieval-Augmented Generation (RAG) pipeline:
+
+Upload documents
+
+Extract text from files
+
+Split text into chunks
+
+Convert chunks into embeddings
+
+Store embeddings in ChromaDB
+
+Retrieve relevant chunks
+
+Generate answer using FLAN-T5
+
+🏗 Architecture
 User Query
     ↓
 Retriever (Chroma Vector DB)
@@ -65,94 +106,91 @@ Relevant Document Chunks
 FLAN-T5 Language Model
     ↓
 Generated Answer
-```
 
----
+🛠 Tech Stack
+Frontend
 
-## 🛠 Tech Stack
+Streamlit
 
-**Frontend**
+AI / NLP
 
-* Streamlit
+Transformers (FLAN-T5)
 
-**AI / NLP**
+LangChain
 
-* Transformers (FLAN-T5)
-* LangChain
+Vector Database
 
-**Vector Database**
+ChromaDB
 
-* ChromaDB
+Document Processing
 
-**Document Processing**
+PyPDFLoader
 
-* PyPDF
-* TextLoader
-* CSVLoader
+TextLoader
 
-**Language**
+CSVLoader
 
-* Python
+Language
 
----
+Python
 
-## 📦 Installation
+📦 Installation
 
 Clone the repository:
 
-```bash
-git clone [https://github.com/your-username/ai-document-search-rag.git](https://github.com/jagadeesh08-git/AI-document-search-rag.git
-)
-cd ai-document-search-rag
-```
+git clone https://github.com/jagadeesh08-git/AI-document-search-rag.git
+cd AI-document-search-rag
+
 
 Install dependencies:
 
-```bash
 pip install -r requirements.txt
-```
+
 
 Run the app:
 
-```bash
 streamlit run app.py
-```
 
----
-
-## 📂 Project Structure
-
-```
+📂 Project Structure
 ai-document-search-rag/
 │
 ├── app.py
 ├── requirements.txt
 ├── config.toml
 └── README.md
-```
 
----
-
-## 🎯 Learning Objectives
+🎯 Learning Objectives
 
 This project demonstrates:
 
-* Retrieval-Augmented Generation (RAG)
-* Document embeddings
-* Vector similarity search
-* Prompt-based generation
-* Streamlit app deployment
-* LLM integration with LangChain
+Retrieval-Augmented Generation (RAG)
 
----
+Document embeddings
 
-## 🔮 Future Improvements
+Vector similarity search
 
-* Replace FakeEmbeddings with real embeddings
-* Add OpenAI / HuggingFace embedding models
-* Add multi-document citation references
-* Add conversation memory
-* Add authentication
-* Improve UI/UX
+Prompt-based answer generation
 
----
+Streamlit deployment
+
+LangChain integration
+
+Local LLM usage
+
+🔮 Future Improvements
+
+Replace FakeEmbeddings with real embeddings
+
+Add HuggingFace embedding models
+
+Add OpenAI embedding option
+
+Add multi-document citation references
+
+Add conversation memory
+
+Add authentication
+
+Improve UI/UX
+
+Deploy with GPU inference
