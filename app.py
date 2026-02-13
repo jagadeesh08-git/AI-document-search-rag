@@ -19,9 +19,53 @@ from langchain_community.embeddings import FakeEmbeddings
 
 # ================= PAGE SETUP =================
 st.set_page_config(page_title="AI Document Search using RAG", layout="centered")
-
-
 # ================= THEME + HEADER =================
+
+st.markdown(
+    """
+<style>
+.stApp { background-color: #9CA3AF; }
+
+header[data-testid="stHeader"] {
+    background-color: #9CA3AF;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #9CA3AF;
+}
+
+div[data-testid="stAppViewContainer"] {
+    background-color: #E5E7EB;
+}
+
+div.block-container {
+    background-color: #E5E7EB;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.stTextInput input {
+    background-color: #E5E7EB !important;
+    border: 1px solid #6B7280 !important;
+    border-radius: 8px;
+}
+
+.stButton button {
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 8px;
+}
+
+.stButton button:hover {
+    background-color: #4338CA;
+}
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+
+
 st.markdown("""
 <div style="
     background: linear-gradient(90deg, #4F46E5, #6366F1);
@@ -38,17 +82,6 @@ Retrieval-Augmented Document Assistant
 </p>
 </div>
 """, unsafe_allow_html=True)
-# ================= THEME + HEADER ================= st.markdown
-( """ <style> .stApp { background-color: #9CA3AF; } 
-header[data-testid="stHeader"] 
-{ background-color: #9CA3AF; } 
-section[data-testid="stSidebar"] 
-{ background-color: #9CA3AF; } 
-div[data-testid="stAppViewContainer"] 
-{ background-color: #E5E7EB; } 
-div.block-container 
-{ background-color: #E5E7EB; border-radius: 12px; padding: 2rem; } .stTextInput input { background-color: #E5E7EB !important; border: 1px solid #6B7280 !important; border-radius: 8px; } .stButton button { background-color: #4F46E5; color: white; border-radius: 8px; } .stButton button:hover { background-color: #4338CA; } 
-</style> """, unsafe_allow_html=True, )
 
 
 st.markdown(
@@ -341,5 +374,6 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
 
