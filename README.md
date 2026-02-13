@@ -22,7 +22,8 @@ https://ai-document-search-rag-85nzddooadkfysdpwyzc6a.streamlit.app/
 
 Add a screenshot here later
 
-<img width="1919" height="1004" alt="image" src="https://github.com/user-attachments/assets/02a18172-0450-4e85-acca-196f36fec615" />
+<img width="1918" height="868" alt="image" src="https://github.com/user-attachments/assets/e7c60a5c-71b7-4103-b1d3-64f34c7ba9f0" />
+
 
 
 ✨ Features
