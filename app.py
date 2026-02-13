@@ -18,7 +18,8 @@ from langchain_community.embeddings import FakeEmbeddings
 
 
 # ================= PAGE SETUP =================
-st.set_page_config(page_title="AI Document Search using RAG", layout="centered")
+st.set_page_config(page_title="AI Document Search using RAG", layout="wide")
+
 # ================= THEME + HEADER =================
 
 st.markdown(
@@ -374,6 +375,7 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
 
 
