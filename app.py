@@ -22,42 +22,23 @@ st.set_page_config(page_title="AI Document Search using RAG", layout="centered")
 
 
 # ================= THEME + HEADER =================
-st.markdown(
-    """
-<style>
-.stApp { background-color: #9CA3AF; }
-header[data-testid="stHeader"] { background-color: #9CA3AF; }
-section[data-testid="stSidebar"] { background-color: #9CA3AF; }
-
-div[data-testid="stAppViewContainer"] {
-    background-color: #E5E7EB;
-}
-
-div.block-container {
-    background-color: #E5E7EB;
+st.markdown("""
+<div style="
+    background: linear-gradient(90deg, #4F46E5, #6366F1);
+    padding: 20px;
     border-radius: 12px;
-    padding: 2rem;
-}
+    margin-bottom: 20px;
+    text-align: center;
+">
+<h1 style="color:white; margin:0;">
+📄 AI Document Search using RAG
+</h1>
+<p style="color:#E0E7FF; margin-top:6px;">
+Retrieval-Augmented Document Assistant
+</p>
+</div>
+""", unsafe_allow_html=True)
 
-.stTextInput input {
-    background-color: #E5E7EB !important;
-    border: 1px solid #6B7280 !important;
-    border-radius: 8px;
-}
-
-.stButton button {
-    background-color: #4F46E5;
-    color: white;
-    border-radius: 8px;
-}
-
-.stButton button:hover {
-    background-color: #4338CA;
-}
-</style>
-""",
-    unsafe_allow_html=True,
-)
 
 st.markdown(
     """
@@ -358,3 +339,4 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
