@@ -20,20 +20,23 @@ https://ai-document-search-rag-85nzddooadkfysdpwyzc6a.streamlit.app/
 
 📸 App Preview
 
-Add a screenshot here later:
+Add a screenshot here later
 
-<img width="1913" height="875" alt="image" src="https://github.com/user-attachments/assets/f90b7d31-78e0-4b6d-bab6-6efe0e34003c" />
+<img width="1913" height="875" alt="image" src="https://github.com/user-attachments/assets/d5e605fa-f71a-40bc-b170-591802f9832c" />
 
 
 ✨ Features
 📄 Multiple Document Upload
 
-Upload PDF, TXT, and CSV files simultaneously.
-All documents are automatically indexed for search.
+Upload PDF, TXT, and CSV files simultaneously
+
+Documents are automatically indexed for search
 
 💡 Auto Question Suggestions (Per Document)
 
-The system generates smart question suggestions for each uploaded document by extracting keywords from document content.
+Generates smart question suggestions for each uploaded document
+
+Extracts keywords from document content
 
 Helps users:
 
@@ -45,8 +48,9 @@ Ask meaningful questions
 
 🔎 Document Question Answering
 
-Users can ask questions about uploaded files.
-Answers are generated only from retrieved document chunks.
+Ask questions about uploaded files
+
+Answers generated only from retrieved document chunks
 
 💬 Chat History Tracking
 
@@ -56,11 +60,17 @@ Previous questions
 
 Generated answers
 
-This allows users to review earlier interactions.
+Allows users to:
+
+Review earlier interactions
+
+Continue document exploration
 
 ⬇️ Download Chat History
 
-Users can download the entire session as a text file for later reference.
+Download entire Q&A session as a text file
+
+Useful for notes, documentation, or research logs
 
 📚 Sidebar Document Manager
 
@@ -74,9 +84,11 @@ App controls
 
 🧠 Local LLM Inference
 
-The system runs FLAN-T5 locally using HuggingFace Transformers.
+Runs FLAN-T5 locally
 
-No external API required.
+Uses HuggingFace Transformers
+
+No external API required
 
 🧠 How It Works
 
@@ -135,20 +147,14 @@ Language
 Python
 
 📦 Installation
-
-Clone the repository:
-
+Clone repository
 git clone https://github.com/jagadeesh08-git/AI-document-search-rag.git
 cd AI-document-search-rag
 
-
-Install dependencies:
-
+Install dependencies
 pip install -r requirements.txt
 
-
-Run the app:
-
+Run the app
 streamlit run app.py
 
 📂 Project Structure
