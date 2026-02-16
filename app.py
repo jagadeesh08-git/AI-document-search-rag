@@ -21,10 +21,10 @@ from langchain_community.embeddings import FakeEmbeddings
 st.set_page_config(page_title="AI Document Search using RAG", layout="wide")
 
 # ================= THEME + HEADER =================
+
 st.markdown(
     """
 <style>
-/* App backgrounds */
 .stApp { background-color: #9CA3AF; }
 
 header[data-testid="stHeader"] {
@@ -45,20 +45,12 @@ div.block-container {
     padding: 2rem;
 }
 
-/* 🔧 FIX — force readable text */
-label, p, span, div, h1, h2, h3, h4 {
-    color: #1F2937 !important;
-}
-
-/* Inputs */
 .stTextInput input {
     background-color: #E5E7EB !important;
     border: 1px solid #6B7280 !important;
     border-radius: 8px;
-    color: #111827 !important;
 }
 
-/* Buttons */
 .stButton button {
     background-color: #4F46E5;
     color: white;
@@ -73,6 +65,30 @@ label, p, span, div, h1, h2, h3, h4 {
     unsafe_allow_html=True,
 )
 
+
+
+st.markdown("""
+<div style="
+    background: linear-gradient(90deg, #4F46E5, #6366F1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+">
+<h1 style="color:white; margin:0;">
+📄 AI Document Search using RAG
+</h1>
+<p style="color:#E0E7FF; margin-top:6px;">
+Retrieval-Augmented Document Assistant
+</p>
+</div>
+""", unsafe_allow_html=True)
+
+
+st.markdown(
+    "Upload one or more documents and ask questions. "
+    "Answers are generated **strictly from uploaded documents**."
+)
 
 
 # ================= SESSION STATE =================
@@ -359,8 +375,6 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
-
-
 
 
 
