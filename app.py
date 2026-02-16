@@ -44,24 +44,17 @@ div.block-container {
     padding: 2rem;
 }
 
-/* FIX TEXT COLORS */
-.stMarkdown p {
-    color: black !important;
-}
-
-label, .stCaption {
-    color: black !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: black !important;
-}
-
 .stTextInput input {
     background-color: #E5E7EB !important;
     border: 1px solid #6B7280 !important;
     border-radius: 8px;
+    color: black !important;              /* typed text */
+}
+
+/* placeholder text */
+.stTextInput input::placeholder {
     color: black !important;
+    opacity: 1 !important;
 }
 
 .stButton button {
@@ -389,6 +382,7 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
 
 
