@@ -76,9 +76,16 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 8px;
 }
 
+.stDownloadButton button {
+    background-color: #111827 !important;
+    color: white !important;
+    border-radius: 8px;
+}
+
 .stButton button:hover {
     background-color: #4338CA;
 }
+
 </style>
 """,
     unsafe_allow_html=True,
@@ -395,6 +402,7 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
 
 
