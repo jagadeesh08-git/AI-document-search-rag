@@ -69,18 +69,25 @@ h1, h2, h3, h4, h5, h6 {
     color: black !important;
     opacity: 1 !important;
 }
+.stButton button {
+    background-color: #4F46E5;
+    color: white;
+    border-radius: 8px;
+}
 
-/* Download button fix */
 div.stDownloadButton > button {
     background-color: #111827 !important;
-    color: white !important;
     border-radius: 8px;
-    font-weight: 500;
 }
 
-div.stDownloadButton > button p {
+div.stDownloadButton > button * {
     color: white !important;
 }
+
+.stButton button:hover {
+    background-color: #4338CA;
+}
+
 
 </style>
 """,
@@ -398,6 +405,7 @@ if st.session_state.chat_history:
         file_name="chat_history.txt",
         mime="text/plain",
     )
+
 
 
 
